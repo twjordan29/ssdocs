@@ -1,3 +1,16 @@
+<?php 
+
+    include('inc/functions.php'); 
+
+    if(isset($_POST['login'])) {
+        login();
+    }
+
+    if(isLoggedIn()) {
+        header("location: dashboard");
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,15 +18,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>SyntaxScripts Docs | Verification</title>
+        <title>SyntaxScripts Support | Verification</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="assets/support.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
+        <?php include('inc/nav.php'); ?>
         <!-- Page content-->
         <div class="container">
+            <?php if(isset($_GET['customer']) && $_GET['customer'] == "notfound") { echo '<div class="mt-5 alert alert-danger"><b>Oops,</b> we could not verify that you are a customer. If this is a mistake, create a ticket in our discord!</div>'; } ?>
+            <?php if(isset($_GET['verified']) && $_GET['verified'] == "no") { echo '<div class="mt-5 alert alert-danger"><b>Oops,</b> you cannot access that page until you have verified yourself!</div>'; } ?>
             <div class="text-center mt-5 mb-3">
                 <h1>Verification</h1>
                 <p>In order to proceed to the documentation, you must first verify that you're a verified customer. This is just a small pirate prevention system that helps us protect you (our valued customers) and our hard work.</p>
@@ -25,17 +41,17 @@
 
                     </div>
                     <div class="col-6">
-                        <form action="">
+                        <form action="index" method="POST">
                             <div class="mb-3">
                                 <label>Discord#0000</label>
-                                <input type="text" class="form-control" >
+                                <input type="text" name="discord" class="form-control" >
                             </div>
                             <div class="mb-3">
                                 <label>Verification Key</label>
-                                <input type="text" class="form-control" >
+                                <input type="text" name="verification_key" class="form-control" >
                             </div>
                             <div class="mb-3 float-end">
-                                <input type="submit" class="btn btn-info" value="Verify">
+                                <input type="submit" name="login" class="btn btn-info" value="Verify">
                             </div>
                         </form>
                     </div>
